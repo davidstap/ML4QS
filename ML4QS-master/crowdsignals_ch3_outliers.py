@@ -44,9 +44,7 @@ for col in outlier_columns:
     # And try out all different approaches. Note that we have done some optimization
     # of the parameter values for each of the approaches by visual inspection.
     dataset = OutlierDistr.chauvenet(dataset, col)
-    print('chauvenet plot')
     DataViz.plot_binary_outliers(dataset, col, col + '_outlier')
-    print('mixture model plot')
     dataset = OutlierDistr.mixture_model(dataset, col)
     DataViz.plot_dataset(dataset, [col, col + '_mixture'], ['exact','exact'], ['line', 'points'])
     # This requires:
@@ -54,7 +52,6 @@ for col in outlier_columns:
     # 31839 * 31839 * 64 bits = ~8GB available memory
     try:
         dataset = OutlierDist.simple_distance_based(dataset, [col], 'euclidean', 0.10, 0.99)
-        print('simple dist outlier plot')
         DataViz.plot_binary_outliers(dataset, col, 'simple_dist_outlier')
     except MemoryError as e:
         print('Not enough memory available for simple distance-based outlier detection...')
@@ -62,7 +59,6 @@ for col in outlier_columns:
 
     try:
         dataset = OutlierDist.local_outlier_factor(dataset, [col], 'euclidean', 5)
-        print('local outlier factor plot')
         DataViz.plot_dataset(dataset, [col, 'lof'], ['exact','exact'], ['line', 'points'])
     except MemoryError as e:
         print('Not enough memory available for lof...')

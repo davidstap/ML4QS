@@ -110,6 +110,7 @@ class VisualizeDataset:
 
         xfmt = md.DateFormatter('%H:%M')
 
+
         # Create proper subplots.
         if len(values) > 0:
             f, xar = plot.subplots(len(values) + 1, sharex=True, sharey=False)

@@ -34,7 +34,10 @@ MisVal = ImputationMissingValues()
 imputed_mean_dataset = MisVal.impute_mean(copy.deepcopy(dataset), 'hr_watch_rate')
 imputed_median_dataset = MisVal.impute_median(copy.deepcopy(dataset), 'hr_watch_rate')
 imputed_interpolation_dataset = MisVal.impute_interpolate(copy.deepcopy(dataset), 'hr_watch_rate')
-DataViz.plot_imputed_values(dataset, ['original', 'mean', 'interpolation'], 'hr_watch_rate', imputed_mean_dataset['hr_watch_rate'], imputed_interpolation_dataset['hr_watch_rate'])
+# DataViz.plot_imputed_values(dataset, ['original', 'mean', 'interpolation'], 'hr_watch_rate', imputed_mean_dataset['hr_watch_rate'], imputed_interpolation_dataset['hr_watch_rate'])
+
+print imputed_interpolation_dataset['hr_watch_rate']
+DataViz.plot_imputed_values(dataset, ['original', 'interpolation'], 'hr_watch_rate', imputed_interpolation_dataset['hr_watch_rate'])
 
 # And we impute for all columns except for the label in the selected way (interpolation)
 
