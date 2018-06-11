@@ -108,7 +108,6 @@ class DistanceBasedOutlierDetection:
         outlier_factor = []
         # Compute the outlier score per row.
         for i in range(0, len(new_data_table.index)):
-            print i
             outlier_factor.append(self.local_outlier_factor_instance(i, k))
         data_outlier_probs = pd.DataFrame(outlier_factor, index=new_data_table.index, columns=['lof'])
         data_table = pd.concat([data_table, data_outlier_probs], axis=1)

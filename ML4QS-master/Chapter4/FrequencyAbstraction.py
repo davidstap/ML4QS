@@ -8,7 +8,8 @@
 ##############################################################
 
 import numpy as np
-
+from scipy.stats import skew
+from scipy.stats import kurtosis
 
 # This class performs a Fourier transformation on the data to find frequencies that occur
 # often and filter noise.
@@ -33,6 +34,10 @@ class FourierTransformation:
             data_table[col + '_max_freq'] = np.nan
             data_table[col + '_freq_weighted'] = np.nan
             data_table[col + '_pse'] = np.nan
+            # davidstap: add additional measurement (skewness)
+            data_table[col + '_skewness'] = np.nan
+            data_table[col + '_kurtosis'] = np.nan
+
             for freq in freqs:
                 data_table[col + '_freq_' + str(freq) + '_Hz_ws_' + str(window_size)] = np.nan
 
@@ -46,8 +51,23 @@ class FourierTransformation:
                     data_table.ix[i, col + '_freq_' + str(freqs[j]) + '_Hz_ws_' + str(window_size)] = real_ampl[j]
                 # And select the dominant frequency. We only consider the positive frequencies for now.
 
+
+                # print(freqs)
+                # print(real_ampl)
+                # print(freqs[np.argmax(real_ampl[0:len(real_ampl)])])
+                # print(float(skew(real_ampl)))
+                # print(float())
+                # print('\n\n\n')
+
+
+
                 data_table.ix[i, col + '_max_freq'] = freqs[np.argmax(real_ampl[0:len(real_ampl)])]
                 data_table.ix[i, col + '_freq_weighted'] = float(np.sum(freqs * real_ampl)) / np.sum(real_ampl)
+
+                #davidstap: added additional measurements (skewness, kurtosis)
+                data_table.ix[i, col + '_skewness'] = float(skew(real_ampl))
+                data_table.ix[i, col + '_kurtosis'] = float(kurtosis(real_ampl))
+
                 PSD = np.divide(np.square(real_ampl),float(len(real_ampl)))
                 PSD_pdf = np.divide(PSD, np.sum(PSD))
                 data_table.ix[i, col + '_pse'] = -np.sum(np.log(PSD_pdf) * PSD_pdf)

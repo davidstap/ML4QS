@@ -302,6 +302,8 @@ class HierarchicalClustering:
         temp_dataset = dataset[cols]
         df = NonHierarchicalClustering()
 
+
+
         if (not use_prev_linkage) or (self.link is None):
             # Perform the clustering process according to the specified distance metric.
             if distance_metric == df.manhattan:
@@ -326,4 +328,3 @@ class HierarchicalClustering:
 
         # And simply apply the instance based algorithm...
         return self.agglomerative_over_instances(temp_dataset, temp_dataset.columns, max_clusters, distance_metric, use_prev_linkage=use_prev_linkage, link_function=link_function)
-
